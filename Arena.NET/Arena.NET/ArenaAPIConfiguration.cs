@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Arena.NET
 {
@@ -12,20 +15,23 @@ namespace Arena.NET
     {
         public static Session Session { get; set; }
         public static String APIUrl { get; set; }
+        public static Credentials Credentials { get; set; }
+
+        private static HttpClient _client;
 
         public static HttpClient Client
         {
             get
             {
                 if(String.IsNullOrWhiteSpace(APIUrl)) { throw new Exception("Cannot request client with specifiying the api uri."); }
-                if (Client == null)
+                if (_client == null)
                 {
                     HttpClient client = new HttpClient();
                     client.BaseAddress = new Uri(String.Format("{0}/{1}/", APIUrl, "api.svc"));
-                    return new HttpClient();
+                    _client = client;
                 }
 
-                return Client;
+                return _client;
             }
         }
 
@@ -41,6 +47,8 @@ namespace Arena.NET
 
             //assuming we have a good base URI and credentials, let's connect and obtain a session if there isn't already one
             APIUrl = apiUrl;
+            Credentials = apiCredentials;
+            
         }
 
         /// <summary>
@@ -55,34 +63,35 @@ namespace Arena.NET
             Session = session;
         }
 
-        private static async Task<Session> GetSessionAsync()
+        public static async Task GetSessionAsync()
         {
-            if(Session != null && !Session.IsExpired) { return Session; }
+            //already have active session
+            if(Session != null && !Session.IsExpired) { return; }
+
+            //no credentials
+            if(Credentials == null || !Credentials.HasCredentials) { return; }
 
             String action = "login";
 
             Client.DefaultRequestHeaders.Accept.Clear();
-
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
-
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, action);
-            request.Content = new StringContent("{\"name\":\"John Doe\",\"age\":33}",
-                                                Encoding.UTF8,
-                                                "application/json");//CONTENT-TYPE header
 
-            client.SendAsync(request)
-                  .ContinueWith(responseTask =>
-                  {
-                      Console.WriteLine("Response: {0}", responseTask.Result);
-                  });
+            //data to post
+            var keyValuePairs = new List<KeyValuePair<string, string>>();
+            keyValuePairs.Add(new KeyValuePair<string, string>("username", Credentials.ConvertToUnsecureString(Credentials.Username)));
+            keyValuePairs.Add(new KeyValuePair<string, string>("password", Credentials.ConvertToUnsecureString(Credentials.Password)));
+            keyValuePairs.Add(new KeyValuePair<string, string>("api_key", Credentials.ConvertToUnsecureString(Credentials.APIKey)));
 
-            HttpResponseMessage response = await Client.GetAsync(path);
+            request.Content = new FormUrlEncodedContent(keyValuePairs);
+            
+            HttpResponseMessage response = await Client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                Session = await response.Content.ReadAsAsync<Session>();
+                var session = response.Content.ReadAsStringAsync().Result;
+                XmlSerializer xmls = new XmlSerializer(typeof(Session));
+                Session = (Session)xmls.Deserialize(new StringReader(session));
             }
-
-            return Session;
         }
     }
 }

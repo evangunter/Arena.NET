@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arena.NET", "Arena.NET\Arena.NET.csproj", "{A6912A1D-CA46-4F50-916D-595718C48BEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arena.NET.Test", "Arena.NET.Test\Arena.NET.Test.csproj", "{FEC0B783-0CC5-411B-960E-B6E9A3563DC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A6912A1D-CA46-4F50-916D-595718C48BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6912A1D-CA46-4F50-916D-595718C48BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6912A1D-CA46-4F50-916D-595718C48BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC0B783-0CC5-411B-960E-B6E9A3563DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC0B783-0CC5-411B-960E-B6E9A3563DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC0B783-0CC5-411B-960E-B6E9A3563DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC0B783-0CC5-411B-960E-B6E9A3563DC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
