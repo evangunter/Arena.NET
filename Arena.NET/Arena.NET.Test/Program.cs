@@ -10,10 +10,10 @@ namespace Arena.NET.Test
     {
         static void Main(string[] args)
         {
-            String apiURL = "https://necc.myshelby.org";
-            String username = "egunter";
-            String password = "01644#Anecc3";
-            String apiKey = "9f4be48b-d02e-4b48-a1dc-5f25dd52a776";
+            String apiURL = "XXXX";
+            String username = "XXXX";
+            String password = "XXXXX";
+            String apiKey = "XXXX";
 
             var credentials = new Credentials(username, password, apiKey);
 
