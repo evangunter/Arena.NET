@@ -16,18 +16,21 @@ namespace Arena.NET
 
         public SecureString APIKey { get; set; }
 
+        public SecureString APISecretKey { get; set; }
 
-        public Credentials(String username, String password, String apiKey)
+
+        public Credentials(String username, String password, String apiKey, String apiSecretKey)
         {
-            if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(apiKey))
+            if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(apiKey) || String.IsNullOrWhiteSpace(apiSecretKey))
             {
                 throw new Exception("Invalid credentials. Empty.");
             }
 
             //Convert ID to SecureString
-            this.Username = ConvertToSecureString(username);
-            this.Password = ConvertToSecureString(password);
-            this.APIKey = ConvertToSecureString(apiKey);
+            Username = ConvertToSecureString(username);
+            Password = ConvertToSecureString(password);
+            APIKey = ConvertToSecureString(apiKey);
+            APISecretKey = ConvertToSecureString(apiSecretKey);
 
         }
 
@@ -35,7 +38,7 @@ namespace Arena.NET
         {
             get
             {
-                return (Username != null && Password != null && APIKey != null && Username.Length > 0 && Password.Length > 0 && APIKey.Length > 0);
+                return (Username != null && Password != null && APIKey != null && Username.Length > 0 && Password.Length > 0 && APIKey.Length > 0 && APISecretKey.Length > 0);
             }
         }
 

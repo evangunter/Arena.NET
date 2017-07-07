@@ -47,14 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArenaAPIConfiguration.cs" />
+    <Compile Include="ArenaAPI.cs" />
     <Compile Include="Credentials.cs" />
+    <Compile Include="Helpers\XMLHelper.cs" />
+    <Compile Include="Objects\Address.cs" />
+    <Compile Include="Objects\Email.cs" />
+    <Compile Include="Objects\Phone.cs" />
+    <Compile Include="Objects\ArenaPostResult.cs" />
+    <Compile Include="Repositories\PersonListOptions.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\PersonRepository.cs" />
+    <Compile Include="Objects\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Endpoints\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

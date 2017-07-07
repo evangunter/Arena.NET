@@ -11,15 +11,15 @@ using System.Xml.Serialization;
 
 namespace Arena.NET
 {
-    public static class ArenaAPIConfiguration
+    public class ArenaAPI
     {
-        public static Session Session { get; set; }
-        public static String APIUrl { get; set; }
-        public static Credentials Credentials { get; set; }
+        public Session Session { get; set; }
+        public String APIUrl { get; set; }
+        public Credentials Credentials { get; set; }
 
-        private static HttpClient _client;
+        private HttpClient _client;
 
-        public static HttpClient Client
+        public HttpClient Client
         {
             get
             {
@@ -41,7 +41,7 @@ namespace Arena.NET
         /// </summary>
         /// <param name="apiUrl">The base URL of your arena API. Example: https://yourchurch.myshelby.org</param>
         /// <param name="apiCredentials">Credentials object for username, password, and apiKey</param>
-        public static void Configure(string apiUrl, Credentials apiCredentials)
+        public ArenaAPI(string apiUrl, Credentials apiCredentials)
         {
             if(String.IsNullOrWhiteSpace(apiUrl) || !apiCredentials.HasCredentials) { throw new Exception("Invalid api url or credentials."); }
 
@@ -55,7 +55,7 @@ namespace Arena.NET
         /// If for some reason you already have a session
         /// </summary>
         /// <param name="session"></param>
-        public static void Configure(string apiUrl, Session session)
+        public ArenaAPI(string apiUrl, Session session)
         {
             if (session != null || String.IsNullOrWhiteSpace(apiUrl)) { throw new Exception("Invalid api url or session."); }
 
@@ -63,7 +63,7 @@ namespace Arena.NET
             Session = session;
         }
 
-        public static async Task GetSessionAsync()
+        public async Task GetSessionAsync()
         {
             //already have active session
             if(Session != null && !Session.IsExpired) { return; }
@@ -74,7 +74,6 @@ namespace Arena.NET
             String action = "login";
 
             Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, action);
 
             //data to post
