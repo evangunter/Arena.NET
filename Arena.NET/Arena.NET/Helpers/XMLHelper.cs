@@ -70,7 +70,20 @@ namespace Arena.NET.Helpers
             //email
             if(person.Emails != null && person.Emails.Count > 0)
             {
-                personElement.AppendChild(personDocument.CreateElement("FirstActiveEmail")).InnerText = person.Emails.First().Address;
+                //personElement.AppendChild(personDocument.CreateElement("FirstActiveEmail")).InnerText = person.Emails.First().Address;
+
+                //XmlElement emailsElement = (XmlElement)personElement.AppendChild(personDocument.CreateElement("Emails"));
+
+                //foreach(var email in person.Emails)
+                //{
+                //    emailsElement.AppendChild(personDocument.CreateElement("Address")).InnerText = email.Address;
+                //}
+
+                String xmlEmails = person.Emails.Serialize();
+                xmlEmails = xmlEmails.Replace("ArrayOfEmail", "Emails");
+                XmlNode emails = personDocument.ImportNode(GetElement(xmlEmails), true);
+
+                personElement.AppendChild(emails);
             }
 
             //birthdate
@@ -79,17 +92,24 @@ namespace Arena.NET.Helpers
             if(person.Phones != null && person.Phones.Count > 0)
             {
 
-                //cell phone
-                var cell = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("cell"));
-                if (cell != null) { personElement.AppendChild(personDocument.CreateElement("CellPhone")).InnerText = cell.Number; }
+                ////cell phone
+                //var cell = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("cell"));
+                //if (cell != null) { personElement.AppendChild(personDocument.CreateElement("CellPhone")).InnerText = cell.Number; }
 
-                //business phone
-                var business = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("business"));
-                if (business != null) { personElement.AppendChild(personDocument.CreateElement("BusinessPhone")).InnerText = business.Number; }
+                ////business phone
+                //var business = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("business"));
+                //if (business != null) { personElement.AppendChild(personDocument.CreateElement("BusinessPhone")).InnerText = business.Number; }
 
-                //home phone
-                var home = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("home"));
-                if (home != null) { personElement.AppendChild(personDocument.CreateElement("HomePhone")).InnerText = home.Number; }
+                ////home phone
+                //var home = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("home"));
+                //if (home != null) { personElement.AppendChild(personDocument.CreateElement("HomePhone")).InnerText = home.Number; }
+
+                String xmlPhones = person.Phones.Serialize();
+                xmlPhones = xmlPhones.Replace("ArrayOfPhone", "Phones");
+                XmlNode phones = personDocument.ImportNode(GetElement(xmlPhones), true);
+
+                personElement.AppendChild(phones);
+
 
             }
 

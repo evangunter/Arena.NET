@@ -28,10 +28,18 @@ namespace Arena.NET.Objects
         [JsonProperty(PropertyName = "MemberStatusValue")]
         public String MemberStatus { get; set; }
 
+        [XmlElement(ElementName = "MemberStatusID")]
+        [JsonProperty(PropertyName = "MemberStatusID")]
+        public int MemberStatusId { get; set; }
+
         public String Gender { get; set; }
 
+        [XmlArray("Emails")]
+        [XmlArrayItem("Email")]
         public List<Email> Emails { get; set; }
 
+        [XmlArray("Phones")]
+        [XmlArrayItem("Phone")]
         public List<Phone> Phones { get; set; }
 
         [XmlElement(ElementName = "FamilyID")]
@@ -40,10 +48,16 @@ namespace Arena.NET.Objects
 
         public string FamilyName { get; set; }
 
+        [XmlElement(ElementName = "CampusID")]
+        [JsonProperty(PropertyName = "CampusID")]
+        public int CampusId { get; set; }
+
         [XmlElement(ElementName = "FamilyMemberRoleValue")]
         [JsonProperty(PropertyName = "FamilyMemberRoleValue")]
         public String FamilyMemberRole { get; set; }
 
+        [XmlArray("Addresses")]
+        [XmlArrayItem("Address")]
         public List<Address> Addresses { get; set; }
     }
 

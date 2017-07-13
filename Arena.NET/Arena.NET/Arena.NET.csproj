@@ -59,6 +59,7 @@
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="Objects\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="Session.cs" />
   </ItemGroup>
   <ItemGroup />

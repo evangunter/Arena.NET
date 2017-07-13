@@ -39,9 +39,10 @@ namespace Arena.NET.Repositories
         public async Task<List<Person>> Get(PersonListOptions options)
         {
             String parameters = options.ToString();
-            if(String.IsNullOrWhiteSpace(parameters)) { throw new Exception("You must provide at least 1 option paramter to search by."); }
+            String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
+            if (String.IsNullOrWhiteSpace(parameters)) { throw new Exception("You must provide at least 1 option paramter to search by."); }
             
-            Action = String.Format("json/person/list?fields=FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamiliyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue{0}", options);
+            Action = String.Format("json/person/list?fields={0}{1}", fields, options);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Action);
 
             PersonCollection people = await ExecuteGet<PersonCollection>(request);
@@ -50,7 +51,8 @@ namespace Arena.NET.Repositories
 
         public async Task<Person> Get(int personId)
         {
-            Action = String.Format("json/person/{0}?fields=FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamiliyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue", personId);
+            String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
+            Action = String.Format("json/person/{0}?fields={1}", personId, fields);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Action);
 
             return await ExecuteGet<Person>(request);

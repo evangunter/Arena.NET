@@ -22,19 +22,19 @@ namespace Arena.NET.Objects
 
         public String City { get; set; }
 
-        public String State { get; set; }
-
-        public String PostalCode { get; set; }
-
         public String Country { get; set; }
 
-        public Double Latitude { get; set; }
-
-        public Double Longitude { get; set; }
+        public String PostalCode { get; set; }
 
         [XmlElement(ElementName = "Primary")]
         [JsonProperty(PropertyName = "Primary")]
         public Boolean IsPrimary { get; set; }
+
+        public String State { get; set; }
+
+        public Double Latitude { get; set; }
+
+        public Double Longitude { get; set; }
 
         [XmlElement(ElementName = "StreetLine1")]
         [JsonProperty(PropertyName = "StreetLine1")]

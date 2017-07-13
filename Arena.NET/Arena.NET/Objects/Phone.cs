@@ -14,8 +14,13 @@ namespace Arena.NET.Objects
 
         public String Number { get; set; }
 
+        [XmlElement(ElementName = "PhoneTypeID")]
+        [JsonProperty(PropertyName = "PhoneTypeID")]
+        public int PhoneTypeId { get; set; }
+
         [XmlElement(ElementName = "PhoneTypeValue")]
         [JsonProperty(PropertyName = "PhoneTypeValue")]
+        [XmlIgnore]
         public String PhoneType { get; set; }
 
         public Boolean SMSEnabled { get; set; }
