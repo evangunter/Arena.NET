@@ -43,5 +43,21 @@ namespace Arena.NET.Objects
         [XmlElement(ElementName = "StreetLine2")]
         [JsonProperty(PropertyName = "StreetLine2")]
         public String Address2 { get; set; }
+
+        //add the values with data to the search parameters
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (!String.IsNullOrWhiteSpace(Address1)) { builder.Append(String.Format("{0} ", Address1)); }
+
+            if (!String.IsNullOrWhiteSpace(Address2)) { builder.Append(String.Format("{0} ", Address2)); }
+
+            if (!String.IsNullOrWhiteSpace(City) && !String.IsNullOrWhiteSpace(State)) { builder.Append(String.Format("{0}, {1} ", City, State)); }
+
+            if (!String.IsNullOrWhiteSpace(PostalCode)) { builder.Append(String.Format("{0}", PostalCode)); }
+
+            return builder.ToString();
+        }
     }
 }

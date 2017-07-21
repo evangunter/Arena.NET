@@ -39,23 +39,37 @@ namespace Arena.NET.Repositories
         public async Task<List<Person>> Get(PersonListOptions options)
         {
             String parameters = options.ToString();
-            String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
+
+            //The fields are not the same, and I have mapped all the information needed
+            //String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
             if (String.IsNullOrWhiteSpace(parameters)) { throw new Exception("You must provide at least 1 option paramter to search by."); }
             
-            Action = String.Format("json/person/list?fields={0}{1}", fields, options);
+            //Action = String.Format("json/person/list?fields={0}{1}", fields, options);
+            Action = String.Format("json/person/list?{0}", parameters.Remove(0, 1));
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Action);
 
-            PersonCollection people = await ExecuteGet<PersonCollection>(request);
-            return people.Persons;
+            PersonFromListCollection people = await ExecuteGet<PersonFromListCollection>(request);
+
+            //map to person object for consitency
+            List<Person> persons = new List<Person>();
+            people.Persons.ForEach(delegate (PersonFromList person)
+            {
+                persons.Add(new Person(person));
+            });
+
+            return persons;
         }
 
         public async Task<Person> Get(int personId)
         {
-            String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
-            Action = String.Format("json/person/{0}?fields={1}", personId, fields);
+            //String fields = "FirstName,LastName,Addresses,Emails,Phones,Birthdate,FamilyID,FamilyName,FamiliyMemberRoleValue,Gender,PersonGUID,PersonID,MemberStatusValue";
+            //Action = String.Format("json/person/{0}?fields={1}", personId, fields);
+            Action = String.Format("json/person/{0}", personId);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Action);
 
-            return await ExecuteGet<Person>(request);
+            PersonFromGet person = await ExecuteGet<PersonFromGet>(request);
+
+            return new Person(person);
         }
     }
 }

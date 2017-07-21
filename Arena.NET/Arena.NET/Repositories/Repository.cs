@@ -58,8 +58,14 @@ namespace Arena.NET.Repositories
                 }
 
             }
+            
+            ArenaPostResult postResult = new ArenaPostResult();
+            postResult.WasSuccessful = false;
+            postResult.Action = Action;
+            postResult.ErrorMessage = String.Format("Response Status Code: {0}, Reason: {1}, Exception: {2}", response.StatusCode.ToString(), response.ReasonPhrase, exceptionResponse);
 
-            throw new Exception(GetResponseExceptionMessage(response));
+            return postResult;
+            
         }
 
         public async Task<T> ExecuteGet<T>(HttpRequestMessage request)

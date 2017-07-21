@@ -52,13 +52,88 @@ namespace Arena.NET.Objects
         [JsonProperty(PropertyName = "CampusID")]
         public int CampusId { get; set; }
 
+        [XmlElement(ElementName = "CampusName")]
+        [JsonProperty(PropertyName = "CampusName")]
+        [JsonIgnore]
+        public String CampusName { get; set; }
+
+        [XmlElement(ElementName = "RecordStatusValue")]
+        [JsonProperty(PropertyName = "RecordStatusValue")]
+        [JsonIgnore]
+        public String RecordStatus { get; set; }
+
         [XmlElement(ElementName = "FamilyMemberRoleValue")]
         [JsonProperty(PropertyName = "FamilyMemberRoleValue")]
         public String FamilyMemberRole { get; set; }
 
+        [XmlElement(ElementName = "MedicalInformation")]
+        [JsonProperty(PropertyName = "MedicalInformation")]
+        public String MedicalInformation { get; set; }
+
+        [XmlElement(ElementName = "FamilyMemberRoleID")]
+        [JsonProperty(PropertyName = "FamilyMemberRoleID")]
+        public int FamilyMemberRoleId { get; set; }
+
         [XmlArray("Addresses")]
         [XmlArrayItem("Address")]
         public List<Address> Addresses { get; set; }
+
+        public Person()
+        {
+
+        }
+
+        internal Person(PersonFromGet personFromGet)
+        {
+            PersonId = personFromGet.PersonID;
+            PersonIdentifier = Guid.Parse(personFromGet.PersonGUID);
+            BirthDate = personFromGet.BirthDate;
+            FirstName = personFromGet.FirstName;
+            LastName = personFromGet.LastName;
+            MemberStatus = personFromGet.MemberStatusValue;
+            MemberStatusId = personFromGet.MemberStatusID;
+            Gender = personFromGet.Gender;
+            Emails = personFromGet.Emails;
+            Phones = personFromGet.Phones;
+            FamilyId = personFromGet.FamilyID;
+            FamilyName = personFromGet.FamilyName;
+            CampusId = personFromGet.CampusID;
+            CampusName = personFromGet.CampusName;
+            RecordStatus = personFromGet.RecordStatusValue;
+            FamilyMemberRole = personFromGet.FamilyMemberRoleValue;
+            MedicalInformation = personFromGet.MedicalInformation;
+            FamilyMemberRoleId = personFromGet.FamilyMemberRoleID;
+            Addresses = personFromGet.Addresses;
+
+        }
+
+        internal Person(PersonFromList personFromList)
+        {
+            PersonId = personFromList.PersonID;
+            PersonIdentifier = Guid.Parse(personFromList.PersonGUID);
+            BirthDate = personFromList.BirthDate;
+            FirstName = personFromList.FirstName;
+            LastName = personFromList.LastName;
+            MemberStatus = personFromList.MemberStatusValue;
+            MemberStatusId = personFromList.MemberStatusID;
+            Gender = personFromList.Gender;
+            FamilyId = personFromList.FamilyID;
+            //FamilyName = personFromList.;
+            CampusId = personFromList.CampusID;
+            CampusName = personFromList.CampusName;
+            RecordStatus = personFromList.RecordStatusValue;
+            FamilyMemberRole = personFromList.FamilyMemberRoleValue;
+            FamilyMemberRoleId = personFromList.FamilyMemberRoleID;
+            Addresses = personFromList.Addresses;
+
+            Emails = new List<Email> { new Email { Address = personFromList.FirstActiveEmail } };
+
+            List<Phone> phones = new List<Phone>();
+            if (!String.IsNullOrWhiteSpace(personFromList.HomePhone)) { phones.Add(new Phone { Number = personFromList.HomePhone, PhoneType = "Home" }); };
+            if (!String.IsNullOrWhiteSpace(personFromList.CellPhone)) { phones.Add(new Phone { Number = personFromList.HomePhone, PhoneType = "Cell" }); };
+
+            Phones = phones;
+        }
     }
 
     //for desearlizing json

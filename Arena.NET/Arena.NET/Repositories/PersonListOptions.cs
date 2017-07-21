@@ -20,6 +20,8 @@ namespace Arena.NET.Repositories
 
         public String PhoneNumber { get; set; }
 
+        public int FamilyId { get; set; }
+
 
         //add the values with data to the search parameters
         public override string ToString()
@@ -36,7 +38,9 @@ namespace Arena.NET.Repositories
 
             if(PersonId != default(int)) { builder.Append(String.Format("&personid={0}", PersonId)); }
 
-            if(BirthDate != default(DateTime)) { builder.Append(String.Format("&birthdate={0}", BirthDate.ToShortDateString())); }
+            if (FamilyId != default(int)) { builder.Append(String.Format("&familyid={0}", FamilyId)); }
+
+            if (BirthDate != default(DateTime)) { builder.Append(String.Format("&birthdate={0}", BirthDate.ToShortDateString())); }
 
             return builder.ToString();
         }

@@ -35,13 +35,6 @@ namespace Arena.NET.Helpers
             }
         }
 
-        /// <summary>
-        /// Searlizes the Person Object to the XML object Arena requires - which is for some reason 
-        /// different than what the API returns. What the hell, arena?
-        /// </summary>
-        /// <typeparam name="Person"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public static String Serialize(this Person person)
         {
             XmlDocument personDocument = new XmlDocument();
@@ -59,25 +52,15 @@ namespace Arena.NET.Helpers
                 personElement.AppendChild(addresses);
             }
 
+            //birthdate
+            if (person.BirthDate != default(DateTime)) { personElement.AppendChild(personDocument.CreateElement("BirthDate")).InnerText = person.BirthDate.ToString("s"); }
 
-            //name
-            personElement.AppendChild(personDocument.CreateElement("FirstName")).InnerText = person.FirstName;
-            personElement.AppendChild(personDocument.CreateElement("LastName")).InnerText = person.LastName;
-
-            //gender
-            personElement.AppendChild(personDocument.CreateElement("Gender")).InnerText = person.Gender;
+            //campusId
+            if (person.CampusId != default(int)) { personElement.AppendChild(personDocument.CreateElement("CampusID")).InnerText = person.CampusId.ToString(); }
 
             //email
-            if(person.Emails != null && person.Emails.Count > 0)
+            if (person.Emails != null && person.Emails.Count > 0)
             {
-                //personElement.AppendChild(personDocument.CreateElement("FirstActiveEmail")).InnerText = person.Emails.First().Address;
-
-                //XmlElement emailsElement = (XmlElement)personElement.AppendChild(personDocument.CreateElement("Emails"));
-
-                //foreach(var email in person.Emails)
-                //{
-                //    emailsElement.AppendChild(personDocument.CreateElement("Address")).InnerText = email.Address;
-                //}
 
                 String xmlEmails = person.Emails.Serialize();
                 xmlEmails = xmlEmails.Replace("ArrayOfEmail", "Emails");
@@ -86,39 +69,39 @@ namespace Arena.NET.Helpers
                 personElement.AppendChild(emails);
             }
 
-            //birthdate
-            if (person.BirthDate != default(DateTime)) { personElement.AppendChild(personDocument.CreateElement("BirthDate")).InnerText = person.BirthDate.ToString(); }
+            //familyId
+            if (person.FamilyId != default(int)) { personElement.AppendChild(personDocument.CreateElement("FamilyID")).InnerText = person.FamilyId.ToString(); }
 
-            if(person.Phones != null && person.Phones.Count > 0)
+            //familyMemberRoleId
+            if (person.FamilyMemberRoleId != default(int)) { personElement.AppendChild(personDocument.CreateElement("FamilyMemberRoleID")).InnerText = person.FamilyMemberRoleId.ToString(); }
+
+            //name
+            personElement.AppendChild(personDocument.CreateElement("FirstName")).InnerText = person.FirstName;
+
+            //gender
+            personElement.AppendChild(personDocument.CreateElement("Gender")).InnerText = person.Gender;
+
+            //last name
+            personElement.AppendChild(personDocument.CreateElement("LastName")).InnerText = person.LastName;
+
+            //medical information
+            personElement.AppendChild(personDocument.CreateElement("MedicalInformation")).InnerText = person.MedicalInformation;
+
+            //member status id
+            if (person.MemberStatusId != default(int)) { personElement.AppendChild(personDocument.CreateElement("MemberStatusID")).InnerText = person.MemberStatusId.ToString(); }
+
+            //identifiers
+            personElement.AppendChild(personDocument.CreateElement("PersonGUID")).InnerText = person.PersonIdentifier.ToString();
+            personElement.AppendChild(personDocument.CreateElement("PersonID")).InnerText = person.PersonId.ToString();
+
+            if (person.Phones != null && person.Phones.Count > 0)
             {
-
-                ////cell phone
-                //var cell = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("cell"));
-                //if (cell != null) { personElement.AppendChild(personDocument.CreateElement("CellPhone")).InnerText = cell.Number; }
-
-                ////business phone
-                //var business = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("business"));
-                //if (business != null) { personElement.AppendChild(personDocument.CreateElement("BusinessPhone")).InnerText = business.Number; }
-
-                ////home phone
-                //var home = person.Phones.FirstOrDefault(x => x.PhoneType.ToLower().Contains("home"));
-                //if (home != null) { personElement.AppendChild(personDocument.CreateElement("HomePhone")).InnerText = home.Number; }
-
                 String xmlPhones = person.Phones.Serialize();
                 xmlPhones = xmlPhones.Replace("ArrayOfPhone", "Phones");
                 XmlNode phones = personDocument.ImportNode(GetElement(xmlPhones), true);
 
                 personElement.AppendChild(phones);
-
-
             }
-
-            //identifiers
-            personElement.AppendChild(personDocument.CreateElement("PersonID")).InnerText = person.PersonId.ToString();
-            personElement.AppendChild(personDocument.CreateElement("PersonGUID")).InnerText = person.PersonIdentifier.ToString();
-            personElement.AppendChild(personDocument.CreateElement("FamilyID")).InnerText = person.FamilyId.ToString();
-            personElement.AppendChild(personDocument.CreateElement("MemberStatusValue")).InnerText = person.MemberStatus;
-            personElement.AppendChild(personDocument.CreateElement("FamilyMemberRoleValue")).InnerText = person.FamilyMemberRole;
 
             return personDocument.OuterXml;
         }
