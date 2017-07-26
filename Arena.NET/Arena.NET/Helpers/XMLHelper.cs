@@ -35,6 +35,25 @@ namespace Arena.NET.Helpers
             }
         }
 
+        public static String Serialize(this GroupMember groupMember)
+        {
+            XmlDocument groupMemberDocument = new XmlDocument();
+
+            //add group member
+            XmlElement groupMemberElement = (XmlElement)groupMemberDocument.AppendChild(groupMemberDocument.CreateElement("GroupMember"));
+
+            //Active
+            groupMemberElement.AppendChild(groupMemberDocument.CreateElement("Active")).InnerText = (groupMember.IsActive) ? "true" : "false";
+
+            groupMemberElement.AppendChild(groupMemberDocument.CreateElement("MemberNotes")).InnerText = groupMember.MemberNotes;
+
+            if(groupMember.RoleId != default(int)) { groupMemberElement.AppendChild(groupMemberDocument.CreateElement("RoleID")).InnerText = groupMember.RoleId.ToString(); }
+
+            if (groupMember.UniformNumber != default(int)) { groupMemberElement.AppendChild(groupMemberDocument.CreateElement("UniformNumber")).InnerText = groupMember.UniformNumber.ToString(); }
+
+            return groupMemberDocument.OuterXml;
+        }
+
         public static String Serialize(this Person person)
         {
             XmlDocument personDocument = new XmlDocument();
@@ -52,8 +71,7 @@ namespace Arena.NET.Helpers
                 personElement.AppendChild(addresses);
             }
 
-            //birthdate
-            if (person.BirthDate != default(DateTime)) { personElement.AppendChild(personDocument.CreateElement("BirthDate")).InnerText = person.BirthDate.ToString("s"); }
+            
 
             //campusId
             if (person.CampusId != default(int)) { personElement.AppendChild(personDocument.CreateElement("CampusID")).InnerText = person.CampusId.ToString(); }

@@ -78,6 +78,8 @@ namespace Arena.NET.Objects
         [XmlArrayItem("Address")]
         public List<Address> Addresses { get; set; }
 
+        public int FamilyMembers { get; set; }
+
         public Person()
         {
 
@@ -104,6 +106,7 @@ namespace Arena.NET.Objects
             MedicalInformation = personFromGet.MedicalInformation;
             FamilyMemberRoleId = personFromGet.FamilyMemberRoleID;
             Addresses = personFromGet.Addresses;
+            FamilyMembers = personFromGet.FamilyMembersCount;
 
         }
 

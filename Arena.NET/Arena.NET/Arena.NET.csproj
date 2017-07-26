@@ -51,11 +51,14 @@
     <Compile Include="Credentials.cs" />
     <Compile Include="Helpers\XMLHelper.cs" />
     <Compile Include="Objects\Address.cs" />
+    <Compile Include="Objects\APIObjects\GroupMemberFromGet.cs" />
     <Compile Include="Objects\APIObjects\PersonFromGet.cs" />
     <Compile Include="Objects\Email.cs" />
     <Compile Include="Objects\APIObjects\PersonFromList.cs" />
+    <Compile Include="Objects\GroupMember.cs" />
     <Compile Include="Objects\Phone.cs" />
     <Compile Include="Objects\ArenaPostResult.cs" />
+    <Compile Include="Repositories\GroupRepository.cs" />
     <Compile Include="Repositories\PersonListOptions.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
