@@ -18,9 +18,20 @@ namespace Arena.NET.Repositories
 
         }
 
-        public async Task<ArenaPostResult> InsertOrUpdate(int groupId, int personId, GroupMember groupMember)
+        public async Task<ArenaPostResult> Insert(int groupId, int personId, GroupMember groupMember)
         {
             Action = String.Format("group/{0}/member/{1}/add", groupId, personId);
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Action);
+            String serializedContent = groupMember.Serialize();
+            request.Content = new StringContent(serializedContent, Encoding.UTF8, "application/xml");
+
+            return await ExecutePost(request);
+        }
+
+        public async Task<ArenaPostResult> Update(int groupId, int personId, GroupMember groupMember)
+        {
+            Action = String.Format("group/{0}/member/{1}/update", groupId, personId);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Action);
             String serializedContent = groupMember.Serialize();
