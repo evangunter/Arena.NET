@@ -71,7 +71,8 @@ namespace Arena.NET.Helpers
                 personElement.AppendChild(addresses);
             }
 
-            
+            //birthdate
+            if (person.BirthDate != default(DateTime)) { personElement.AppendChild(personDocument.CreateElement("BirthDate")).InnerText = person.BirthDate.ToString("s"); }
 
             //campusId
             if (person.CampusId != default(int)) { personElement.AppendChild(personDocument.CreateElement("CampusID")).InnerText = person.CampusId.ToString(); }
