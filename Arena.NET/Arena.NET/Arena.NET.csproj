@@ -51,6 +51,7 @@
     <Compile Include="Credentials.cs" />
     <Compile Include="Helpers\XMLHelper.cs" />
     <Compile Include="Objects\Address.cs" />
+    <Compile Include="Objects\APIObjects\FamilyMemberFromGet.cs" />
     <Compile Include="Objects\APIObjects\GroupMemberFromGet.cs" />
     <Compile Include="Objects\APIObjects\PersonFromGet.cs" />
     <Compile Include="Objects\Email.cs" />
