@@ -4,7 +4,7 @@ This is a C# based wrapper for the Arena API by Shelby Systems.
 **Arena.NET Services**
 
 [Introduction](#introduction--support)  
-[Getting Started](#getting-started)
+[Getting Started](#getting-started)  
 [Group](#group)  
 [Person](#person)  
 
