@@ -4,7 +4,8 @@ This is a C# based wrapper for the Arena API by Shelby Systems.
 **Arena.NET Services**
 
 [Introduction](#introduction--support)  
-[Getting Started](#getting-started)  
+[Getting Started](#getting-started)
+[Group](#group)  
 [Person](#person)  
 
 ### Introduction / Support
@@ -113,5 +114,38 @@ Fundamentally, this should work the exact same way as updating a person, except 
 newPerson.PersonId = 27 // some valid id
 ArenaPostResult result = await repository.InsertOrUpdate(newPerson);;
 ```
+
+Group
+--------
+### Getting Group Members
+
+Getting group members assumes you know and have a valid group id (int).
+
+```csharp
+int id = "<someValidGroupId>";
+GroupRepository repository = new GroupRepository(api);
+List<GroupMember> members = await repository.Get(id);
+```
+### Adding Group Members
+
+Adding a group member not only requires the group id (int) and the person id (int) you want to add to the group, but you must also supply the api with new GroupMember object requiring a roleId (int) and an IsActive (boolean). There are other properties on this object you may supply, but these are required. This is a POST method so the return object will always be an ArenaPostResult.
+
+```csharp
+int groupId = "<someValidGroupId>";
+int personId = "<someValidPersonId>";
+GroupRepository repository = new GroupRepository(api);
+ArenaPostResult result = await repository.Insert(groupId, personId, new GroupMember { IsActive = true, RoleId = 24 });
+```
+### Updating Group Members
+
+Updating group members works essentially the same as adding a group member. However, the person needs to already exist in the group and the only thing you can update is properties on the GroupMember object - in this case, I'm inactivating a this person from the group.
+
+```csharp
+int groupId = "<someValidGroupId>";
+int personId = "<someValidPersonId>";
+GroupRepository repository = new GroupRepository(api);
+ArenaPostResult result = await repository.Update(groupId, personId, new GroupMember { IsActive = false, RoleId = 24 });
+```
+
 
 
