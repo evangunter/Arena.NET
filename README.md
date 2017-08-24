@@ -67,6 +67,16 @@ Person person = await repository.Get(id);
 ```
 *Currently, as get request return an object and throw an exception when the request fails, it would probably be a good idea to wrap this in a try catch. In the long run, I'd ideally like to change how this works.*
 
+### Retrieving a Person's Family
+
+To get a person's family when knowing the familyId (int)
+
+```csharp
+int id = "<someValidFamilyId>";
+PersonRepository repository = new PersonRepository(api);
+List<Person> familyMembers = await repository.GetFamily(id);
+```
+
 ### Retrieving Multiple People
 
 If you need to query/search for people in your database, you MUST search using at least 1 of 7 parameters define in the object PersonListOptions. Simply create a new instance of this object, with at least one property set, and pass that object into the overloaded Get method on the PersonRepository.
