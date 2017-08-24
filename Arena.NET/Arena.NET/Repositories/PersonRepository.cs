@@ -36,6 +36,17 @@ namespace Arena.NET.Repositories
             return await ExecutePost(request);
         }
 
+        public async Task<ArenaPostResult> AddNote(int personId, PersonNote personNote)
+        {
+            Action = String.Format("person/{0}/note", personId);
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Action);
+            String serializedContent = personNote.Serialize();
+            request.Content = new StringContent(serializedContent, Encoding.UTF8, "application/xml");
+
+            return await ExecutePost(request);
+        }
+
         public async Task<List<Person>> Get(PersonListOptions options)
         {
             String parameters = options.ToString();

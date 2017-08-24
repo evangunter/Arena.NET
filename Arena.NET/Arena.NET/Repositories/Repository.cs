@@ -39,6 +39,7 @@ namespace Arena.NET.Repositories
         public async Task<ArenaPostResult> ExecutePost(HttpRequestMessage request)
         {
             String exceptionResponse = String.Empty;
+            ArenaPostResult postResult = new ArenaPostResult();
 
             HttpResponseMessage response = await ArenaAPI.Client.PostAsync(request.RequestUri, request.Content);
             if (response.IsSuccessStatusCode)
@@ -55,12 +56,15 @@ namespace Arena.NET.Repositories
                 catch (Exception exception)
                 {
                     exceptionResponse = exception.Message;
+                    postResult.WasSuccessful = true;
                 }
 
             }
-            
-            ArenaPostResult postResult = new ArenaPostResult();
-            postResult.WasSuccessful = false;
+            else
+            {
+                postResult.WasSuccessful = false;
+            }
+
             postResult.Action = Action;
             postResult.ErrorMessage = String.Format("Response Status Code: {0}, Reason: {1}, Exception: {2}", response.StatusCode.ToString(), response.ReasonPhrase, exceptionResponse);
 

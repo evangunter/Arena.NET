@@ -54,6 +54,24 @@ namespace Arena.NET.Helpers
             return groupMemberDocument.OuterXml;
         }
 
+        public static String Serialize(this PersonNote personNote)
+        {
+            XmlDocument personNoteDocument = new XmlDocument();
+
+            //add group member
+            XmlElement personNoteElement = (XmlElement)personNoteDocument.AppendChild(personNoteDocument.CreateElement("PersonNote"));
+
+            //Active
+            personNoteElement.AppendChild(personNoteDocument.CreateElement("Private")).InnerText = (personNote.IsPrivate) ? "true" : "false";
+
+            personNoteElement.AppendChild(personNoteDocument.CreateElement("SecurityTemplateID")).InnerText = personNote.SecurityTemplateId.ToString();
+
+            personNoteElement.AppendChild(personNoteDocument.CreateElement("Text")).InnerText = personNote.Note;
+
+
+            return personNoteDocument.OuterXml;
+        }
+
         public static String Serialize(this Person person)
         {
             XmlDocument personDocument = new XmlDocument();

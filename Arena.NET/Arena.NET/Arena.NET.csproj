@@ -57,6 +57,7 @@
     <Compile Include="Objects\Email.cs" />
     <Compile Include="Objects\APIObjects\PersonFromList.cs" />
     <Compile Include="Objects\GroupMember.cs" />
+    <Compile Include="Objects\PersonNote.cs" />
     <Compile Include="Objects\Phone.cs" />
     <Compile Include="Objects\ArenaPostResult.cs" />
     <Compile Include="Repositories\GroupRepository.cs" />
